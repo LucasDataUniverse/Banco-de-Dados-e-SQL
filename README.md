@@ -5,8 +5,8 @@
 
 ## <a name="indice">Índice</a>
 - [1 Objetivos do curso](#parte1) 
-
-
+- [2 Criando o Banco de Dados e conectando ao Banco](#parte2)  
+- [3 Criando a Tabela](#parte3) 
 
 
 
@@ -30,3 +30,38 @@
 - Realizar downloads de softwares relacionados a banco de dados;
 - Utilizar softwares de modelagem;
 - Aplicar seguramente os relacionamentos 1 x 1 , 1 x N, N x N.
+
+
+## <a name="parte2">Criando o Banco de Dados e conectando ao Banco</a>
+
+```sql
+
+mysql> create database projeto;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use projeto;
+Database changed
+
+```
+[Voltar ao Índice](#indice)
+
+## <a name="parte3">3 Criando a Tabela</a>
+
+```sql
+
+mysql> CREATE TABLE funcionarios
+    -> (
+    ->  idFuncionario INTEGER,
+    ->  nome VARCHAR(100),
+    ->  email VARCHAR(200),
+    ->  sexo VARCHAR(10),
+    ->  departamento VARCHAR(100),
+    ->  admissao VARCHAR(10),
+    ->  salario INTEGER,
+    ->  cargo VARCHAR(100),
+    ->  idRegiao int
+    ->  );
+Query OK, 0 rows affected (0.01 sec)
+
+```
+[Voltar ao Índice](#indice)
