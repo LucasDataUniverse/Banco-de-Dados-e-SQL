@@ -1,4 +1,4 @@
-# O curso completo de Banco de Dados e SQL, sem mistérios!
+# O Banco de Dados e SQL
 
 
 ---
