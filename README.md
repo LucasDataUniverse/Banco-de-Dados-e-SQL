@@ -184,7 +184,7 @@ mysql> select idFuncionario, nome, email from funcionarios;
 
 - Utilizei os comandos LIKE e Where para consulta nesses exercícios.
 - WHERE é onde na tabela eu quero realizar o filtro.
-- LIKE ir procurar no texto do campo cargo a palavra Engineer e o % foi utilizando para indicar qualquer coisa antes da palavra Engineer.
+- LIKE para procurar no texto do campo cargo a palavra Engineer e o % foi utilizando para indicar qualquer coisa antes da palavra Engineer.
 
 ```sql
 SELECT nome, email from funcionarios
@@ -231,7 +231,7 @@ mysql> select sexo, count(sexo) from funcionarios group by sexo;
 +-----------+-------------
 
 ```
-# Exempo
+# Exemplo
 
 ## Em uma base de dados de trabalhadores com 1 milhão de registros onde 100 mil trabalham com jogos e 30 mil trabalham com vendas 70% são mulheres e 30% são homens.
 <br/>
