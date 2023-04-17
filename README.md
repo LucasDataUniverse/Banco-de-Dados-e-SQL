@@ -334,7 +334,7 @@ mysql> select * from cliente;
 
 - APLICANDO A PRIMEIRA FORMA NA TABELA CLIENTE.
 
-![This is an image](Img\Forma01.png)
+![Forma01](https://user-images.githubusercontent.com/130566489/232627442-918cf41a-a259-4ffa-91f1-6b723b62e138.png)
 
 
 - Em relacionamentos 1 x 1 a chave estrangeira fica na tabela mais fraca.
