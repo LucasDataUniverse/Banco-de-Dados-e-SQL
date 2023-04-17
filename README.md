@@ -16,6 +16,9 @@
 - [10 Filtrando valores NULOS](#parte10)
 - [11 UPDATE](#parte11)
 - [12 DELETE](#parte12)
+- [13 MODELAGEM PRIMEIRA FORMA NORMAL](#parte13)
+
+
 
 ## <a name=parte1> Objetivos do curso</a>
 - Entender a diferença entre um Administrador de Dados e um DBA;
@@ -306,3 +309,146 @@ mysql> delete from funcionarios
     -> and email = 'alterado@alterado.com.br';
 Query OK, 1 row affected (0.01 sec)
 ```
+
+## <a name=parte13>MODELAGEM PRIMEIRA FORMA NORMAL</a>
+
+- 01 Todo campo vetorizado se tornará outra TABELA.
+- 02 Todo campo multivalorado se tornará outra TABELA.
+- 03 Toda tabela necessita de pelo menos um campo que identifique todo o registro como senco único.
+
+```sql
+mysql> select * from cliente;
++----------+------+--------------------------+-------------+--------------+---------------------------------------------+
+| nome     | sexo | email                    | cpf         | telefone     | endereco
+|
++----------+------+--------------------------+-------------+--------------+---------------------------------------------+
+| Joao     | M    | JOAO@JOAO.COM.BR         | 13633544228 | 27991654709  | Rua AMELIA - GOIABEIRA - PEDRA - PERNAMBUCO |
+| VICTOR   | M    | VICTOR@VICTOR.COM.BR     | 14533544228 | 1255254709   | Rua AMELIA - GOIABEIRA - PEDRA - PERNAMBUCO |
+| Cláudia  | F    | Cláudia@Cláudia.COM.BR   | 15633544228 | 78945654709  | Rua AMELIA - GOIABEIRA - PEDRA - PERNAMBUCO |
+| matheus  | M    | matheus@matheus.COM.BR   | 16633544228 | 909955654709 | Rua JOAO - BEBERIBI - PEDRA - PERNAMBUCO    |
+| HIAGO    | M    | HIAGO@HIAGO.COM.BR       | 02263544228 | 70991654709  | Rua DR.CARLOS - CENTRO - PEDRA - PERNAMBUCO |
+| FERNANDO | M    | FERNANDO@FERNANDO.COM.BR | 09677544228 | 13991654709  | Rua DRa.ALEXA - AMAZON - PEDRA - PERNAMBUCO |
++----------+------+--------------------------+-------------+--------------+---------------------------------------------+
+6 rows in set (0.00 sec)
+```
+
+- APLICANDO A PRIMEIRA FORMA NA TABELA CLIENTE.
+
+![This is an image](Img\Forma01.png)
+
+
+- Em relacionamentos 1 x 1 a chave estrangeira fica na tabela mais fraca.
+- Em relacionamentos 1 x N a chave estrangeira fica sempre na  cardinalidade N.
+
+- Criando a tablema CLIENTE.
+```sql
+mysql> CREATE TABLE CLIENTE(
+    ->  IDCLIENTE INT PRIMARY KEY AUTO_INCREMENT,
+    ->  NOME VARCHAR(30) NOT NULL,
+    ->  SEXO ENUM('M', 'F') NOT NULL,
+    ->  EMAIL VARCHAR(50) UNIQUE,
+    ->  CPF VARCHAR(15) UNIQUE
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+```
+- Criando a tabela ENDERECO.
+```sql
+mysql> CREATE TABLE ENDERECO(
+    ->  IDENDERECO INT PRIMARY KEY AUTO_INCREMENT,
+    ->  RUA VARCHAR(30) NOT NULL,
+    ->  BAIRRO VARCHAR(30) NOT NULL,
+    ->  CIDADE VARCHAR(30) NOT NULL,
+    ->  ESTADO CHAR(2) NOT NULL,
+    ->  ID_CLIENTE INT UNIQUE,
+    ->  FOREIGN KEY (ID_CLIENTE)
+    ->  REFERENCES CLIENTE(IDCLIENTE)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+```
+
+- Criando a tabela TELEFONE.
+```sql
+mysql> CREATE TABLE TELEFONE(
+    ->  IDTELEFONE INT PRIMARY KEY AUTO_INCREMENT,
+    ->  TIPO ENUM('RES', 'COM', 'CEL') NOT NULL,
+    ->  NUMERO VARCHAR(10) NOT NULL,
+    ->  ID_CLIENTE INT,
+    ->  FOREIGN KEY (ID_CLIENTE)
+    ->  REFERENCES CLIENTE(IDCLIENTE)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+```
+
+- Inserindo dados em na tablema CLIENTE.
+```sql
+mysql> INSERT INTO CLIENTE VALUES(NULL, 'LUCAS', 'M','LUCAS@LUCAS.COM.BR', '77777777777');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO CLIENTE VALUES(NULL, 'CARLOS', 'M','CARLOS@CARLOS.COM.BR', '88888888888');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO CLIENTE VALUES(NULL, 'TIRINGA', 'M','TIRINGA@TIRINGA.COM.BR', '22222222222');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO CLIENTE VALUES(NULL, 'EMANUELY', 'M','EMANUELY@EMANUELY.COM.BR', '33333333333');
+Query OK, 1 row affected (0.00 sec)
+/* -----------------------------------------------------*/
+mysql> SELECT * FROM CLIENTE;
++-----------+----------+------+--------------------------+-------------+
+| IDCLIENTE | NOME     | SEXO | EMAIL                    | CPF         |
++-----------+----------+------+--------------------------+-------------+
+|         1 | LUCAS    | M    | LUCAS@LUCAS.COM.BR       | 77777777777 |
+|         2 | CARLOS   | M    | CARLOS@CARLOS.COM.BR     | 88888888888 |
+|         3 | TIRINGA  | M    | TIRINGA@TIRINGA.COM.BR   | 22222222222 |
+|         4 | EMANUELY | F    | EMANUELY@EMANUELY.COM.BR | 33333333333 |
++-----------+----------+------+--------------------------+-------------+
+4 rows in set (0.00 sec)
+```
+
+- Inserindo dados em na tablema ENDERECO.
+```sql
+mysql> INSERT INTO ENDERECO VALUES(NULL, 'RUA ANTONIO SA', 'CENTRO', 'PEDRA', 'PE', 1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO ENDERECO VALUES(NULL, 'RUA PEDRO SA', 'MACABIRA', 'PEDRA', 'PE', 2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO ENDERECO VALUES(NULL, 'RUA JOSE SA', 'CENTRO', 'PEDRA', 'PE', 3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO ENDERECO VALUES(NULL, 'RUA ANTONIO SA', 'CENTRO', 'PEDRA', 'PE', 4);
+Query OK, 1 row affected (0.01 sec)
+/* -----------------------------------------------------*/
+mysql> SELECT * FROM ENDERECO;
++------------+----------------+----------+--------+--------+------------+
+| IDENDERECO | RUA            | BAIRRO   | CIDADE | ESTADO | ID_CLIENTE |
++------------+----------------+----------+--------+--------+------------+
+|          1 | RUA ANTONIO SA | CENTRO   | PEDRA  | PE     |          1 |
+|          2 | RUA PEDRO SA   | MACABIRA | PEDRA  | PE     |          2 |
+|          3 | RUA JOSE SA    | CENTRO   | PEDRA  | PE     |          3 |
+|          4 | RUA ANTONIO SA | CENTRO   | PEDRA  | PE     |          4 |
++------------+----------------+----------+--------+--------+------------+
+4 rows in set (0.00 sec)
+```
+- Inserindo dados em na tablema TEFELONE.
+```sql
+mysql> INSERT INTO TELEFONE VALUES(NULL, 'COM', '991745698', 3);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO TELEFONE VALUES(NULL, 'CEL', '991658938', 2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO TELEFONE VALUES(NULL, 'RES', '991790134', 3);
+Query OK, 1 row affected (0.01 sec)
+/* -----------------------------------------------------*/
+mysql> SELECT * FROM TELEFONE;
++------------+------+-----------+------------+
+| IDTELEFONE | TIPO | NUMERO    | ID_CLIENTE |
++------------+------+-----------+------------+
+|          1 | COM  | 991745698 |          3 |
+|          2 | CEL  | 991658938 |          2 |
+|          3 | RES  | 991790134 |          3 |
++------------+------+-----------+------------+
+3 rows in set (0.00 sec)
+```
+[Voltar ao Índice](#indice)
