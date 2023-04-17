@@ -12,9 +12,12 @@
 - [6 Sintaxe Básica de Inserção](#parte6) 
 - [7 Comando Select](#parte7) 
 - [8 Seleção com Where](#parte8) 
-- [9 Base de conhecimento para Performace com Operadores Lógicos](#parte9) 
+- [9 Base de conhecimento para Performace com Operadores Lógicos](#parte9)
+- [10 Filtrando valores NULOS](#parte10)
+- [11 UPDATE](#parte11)
+- [12 DELETE](#parte12)
 
-## <a name=parte1> Objetivos do curso<a>
+## <a name=parte1> Objetivos do curso</a>
 - Entender a diferença entre um Administrador de Dados e um DBA;
 - Criar bancos de dados consistentes do ponto de infraestrutura e modelagem;
 - Instalar o Banco de Dados MySql;
@@ -265,3 +268,41 @@ mysql> select nome, email
 ```
 
 [Voltar ao Índice](#indice)
+
+## <a name=parte10>Filtrando Valores NULOS</a>
+
+```sql
+mysql> SELECT nome, sexo, email from funcionarios
+    -> WHERE email IS NULL;
+```
+- o comando irar retornar a tupla que contenha o campo email NULO.
+
+[Voltar ao Índice](#indice)
+
+## <a name=parte11>UPDATE</a>
+
+- Cuidado com esse comando.
+- Utilize sempre o WHERE
+- O exemplo a seguir demonstra a utilização de um comando UPDATE 
+```sql
+mysql> update funcionarios
+    -> set email = 'alterado@alterado.com.br'
+    -> where nome = 'Kennedy'
+    -> and email = 'lkennedyrq@edublogs.org';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+```
+
+[Voltar ao Índice](#indice)
+
+## <a name=parte12>DELETE</a>
+
+- Cuidado com esse comando.
+- Utilize sempre o WHERE
+- O exemplo a seguir demonstra a utilização de um comando DELETE
+```sql
+mysql> delete from funcionarios
+    -> where nome = 'Kennedy'
+    -> and email = 'alterado@alterado.com.br';
+Query OK, 1 row affected (0.01 sec)
+```
