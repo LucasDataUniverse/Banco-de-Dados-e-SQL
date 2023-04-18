@@ -17,7 +17,7 @@
 - [11 UPDATE](#parte11)
 - [12 DELETE](#parte12)
 - [13 MODELAGEM PRIMEIRA FORMA NORMAL](#parte13)
-
+- [14 ENTENDENDO SELEÇÃO, PROJEÇÃO E JUNÇÃO](#parte14)
 
 
 ## <a name=parte1> Objetivos do curso</a>
@@ -452,3 +452,106 @@ mysql> SELECT * FROM TELEFONE;
 3 rows in set (0.00 sec)
 ```
 [Voltar ao Índice](#indice)
+
+
+## <a name=parte14>ENTENDENDO SELEÇÃO, PROJEÇÃO E JUNÇÃO</a>
+
+- PROJEÇÃO é tudo que você quer ver na tela.
+```sql
+SELECT NOW() AS DATA_ATUAL;
+
+SELECT 2+2 AS SOMA;
+
+SELECT 2+2 AS SOMA, NOME, NOW() FROM CLIENTE;
+```
+
+- SELEÇÃO são filtros realizados para criar um subconjunto e a claúsula de seleção é o WHERE.
+
+```sql
+SELECT NOME, SEXO, EMAIL FROM CLIENTE /* PROJEÇÃO */
+WHERE SEXO = 'F';/* SELEÇÃO */
+
+SELECT NUMERO FROM TELEFONE/* PROJEÇÃO */
+WHERE TIPO = 'CEL';/* SELEÇÃO */
+
+```
+ - JUNÇÃO -> JOIN 
+
+ ```SQL
+SELECT NOME, SEXO, BAIRRO, CIDADE/* PROJEÇÃO */
+FROM CLIENTE/* ORIGEM */
+INNER JOIN ENDERECO
+ON IDCLIENTE = ID_CLIENTE;/* JUNÇÃO */
+
++----------+------+----------+--------+
+| NOME     | SEXO | BAIRRO   | CIDADE |
++----------+------+----------+--------+
+| LUCAS    | M    | CENTRO   | PEDRA  |
+| CARLOS   | M    | MACABIRA | PEDRA  |
+| TIRINGA  | M    | CENTRO   | PEDRA  |
+| EMANUELY | F    | CENTRO   | PEDRA  |
++----------+------+----------+--------+
+4 rows in set (0.01 sec)
+
+/* -----------------------------------------------------*/
+
+SELECT NOME, SEXO, BAIRRO, CIDADE/* PROJEÇÃO */
+FROM CLIENTE/* ORIGEM */
+INNER JOIN ENDERECO/* JUNÇÃO */
+ON IDCLIENTE = ID_CLIENTE
+WHERE SEXO='F';/* SELEÇÃO */
++----------+------+--------+--------+
+| NOME     | SEXO | BAIRRO | CIDADE |
++----------+------+--------+--------+
+| EMANUELY | F    | CENTRO | PEDRA  |
++----------+------+--------+--------+
+1 row in set (0.00 sec)
+
+/* -----------------------------------------------------*/
+
+mysql> SELECT NOME, SEXO, EMAIL, TIPO, NUMERO
+    -> FROM CLIENTE
+    -> INNER JOIN TELEFONE
+    -> ON IDCLIENTE = ID_CLIENTE
+    -> WHERE TIPO = 'CEL';
++--------+------+----------------------+------+-----------+
+| NOME   | SEXO | EMAIL                | TIPO | NUMERO    |
++--------+------+----------------------+------+-----------+
+| CARLOS | M    | CARLOS@CARLOS.COM.BR | CEL  | 991658938 |
++--------+------+----------------------+------+-----------+
+1 row in set (0.01 sec)
+
+/* -----------------------------------------------------*/
+
+mysql> SELECT CLIENTE.NOME, CLIENTE.SEXO, ENDERECO.BAIRRO, ENDERECO.CIDADE, TELEFONE.TIPO, TELEFONE.NUMERO
+    -> FROM CLIENTE
+    -> INNER JOIN ENDERECO
+    -> ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+    -> INNER JOIN TELEFONE
+    -> ON CLEINTE.IDCLIENTE = TELEFONE.ID_CLIENTE;
++---------+------+----------+--------+------+-----------+
+| NOME    | SEXO | BAIRRO   | CIDADE | TIPO | NUMERO    |
++---------+------+----------+--------+------+-----------+
+| TIRINGA | M    | CENTRO   | PEDRA  | COM  | 991745698 |
+| CARLOS  | M    | MACABIRA | PEDRA  | CEL  | 991658938 |
+| TIRINGA | M    | CENTRO   | PEDRA  | RES  | 991790134 |
++---------+------+----------+--------+------+-----------+
+3 rows in set (0.00 sec)
+
+/* --------------------ALIAS------------------------*/
+
+mysql> SELECT C.NOME, C.SEXO, E.BAIRRO, E.CIDADE, T.TIPO, T.NUMERO
+    -> FROM CLIENTE C
+    -> INNER JOIN ENDERECO E
+    -> ON C.IDCLIENTE = E.ID_CLIENTE
+    -> INNER JOIN TELEFONE T
+    -> ON C.IDCLIENTE = T.ID_CLIENTE;
++---------+------+----------+--------+------+-----------+
+| NOME    | SEXO | BAIRRO   | CIDADE | TIPO | NUMERO    |
++---------+------+----------+--------+------+-----------+
+| TIRINGA | M    | CENTRO   | PEDRA  | COM  | 991745698 |
+| CARLOS  | M    | MACABIRA | PEDRA  | CEL  | 991658938 |
+| TIRINGA | M    | CENTRO   | PEDRA  | RES  | 991790134 |
++---------+------+----------+--------+------+-----------+
+3 rows in set (0.00 sec)
+ ```
