@@ -334,7 +334,7 @@ mysql> select * from cliente;
 
 - APLICANDO A PRIMEIRA FORMA NA TABELA CLIENTE.
 
-![This is an image](Img\Forma01.png)
+![Forma01](https://user-images.githubusercontent.com/130566489/232627442-918cf41a-a259-4ffa-91f1-6b723b62e138.png)
 
 
 - Em relacionamentos 1 x 1 a chave estrangeira fica na tabela mais fraca.
@@ -452,6 +452,7 @@ mysql> SELECT * FROM TELEFONE;
 3 rows in set (0.00 sec)
 ```
 [Voltar ao Índice](#indice)
+<<<<<<< HEAD
 
 
 ## <a name=parte14>ENTENDENDO SELEÇÃO, PROJEÇÃO E JUNÇÃO</a>
@@ -555,3 +556,5 @@ mysql> SELECT C.NOME, C.SEXO, E.BAIRRO, E.CIDADE, T.TIPO, T.NUMERO
 +---------+------+----------+--------+------+-----------+
 3 rows in set (0.00 sec)
  ```
+=======
+>>>>>>> 2c6f110931101bf848551bee1c9ca06e0d903ba4
