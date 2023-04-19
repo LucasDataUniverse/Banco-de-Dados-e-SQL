@@ -556,5 +556,4 @@ mysql> SELECT C.NOME, C.SEXO, E.BAIRRO, E.CIDADE, T.TIPO, T.NUMERO
 +---------+------+----------+--------+------+-----------+
 3 rows in set (0.00 sec)
  ```
-=======
->>>>>>> 2c6f110931101bf848551bee1c9ca06e0d903ba4
+
