@@ -18,7 +18,7 @@
 - [12 DELETE](#parte12)
 - [13 MODELAGEM PRIMEIRA FORMA NORMAL](#parte13)
 - [14 ENTENDENDO SELEÇÃO, PROJEÇÃO E JUNÇÃO](#parte14)
-
+- [15 FUNÇÃO IFNULL](#parte15)
 
 ## <a name=parte1> Objetivos do curso</a>
 - Entender a diferença entre um Administrador de Dados e um DBA;
@@ -340,7 +340,7 @@ mysql> select * from cliente;
 - Em relacionamentos 1 x 1 a chave estrangeira fica na tabela mais fraca.
 - Em relacionamentos 1 x N a chave estrangeira fica sempre na  cardinalidade N.
 
-- Criando a tablema CLIENTE.
+- Criando a tabela CLIENTE.
 ```sql
 mysql> CREATE TABLE CLIENTE(
     ->  IDCLIENTE INT PRIMARY KEY AUTO_INCREMENT,
@@ -379,7 +379,7 @@ mysql> CREATE TABLE TELEFONE(
 Query OK, 0 rows affected (0.02 sec)
 ```
 
-- Inserindo dados em na tablema CLIENTE.
+- Inserindo dados em na tabela CLIENTE.
 ```sql
 mysql> INSERT INTO CLIENTE VALUES(NULL, 'LUCAS', 'M','LUCAS@LUCAS.COM.BR', '77777777777');
 Query OK, 1 row affected (0.01 sec)
@@ -405,7 +405,7 @@ mysql> SELECT * FROM CLIENTE;
 4 rows in set (0.00 sec)
 ```
 
-- Inserindo dados em na tablema ENDERECO.
+- Inserindo dados na tabela ENDERECO.
 ```sql
 mysql> INSERT INTO ENDERECO VALUES(NULL, 'RUA ANTONIO SA', 'CENTRO', 'PEDRA', 'PE', 1);
 Query OK, 1 row affected (0.00 sec)
@@ -452,7 +452,7 @@ mysql> SELECT * FROM TELEFONE;
 3 rows in set (0.00 sec)
 ```
 [Voltar ao Índice](#indice)
-<<<<<<< HEAD
+
 
 
 ## <a name=parte14>ENTENDENDO SELEÇÃO, PROJEÇÃO E JUNÇÃO</a>
@@ -557,3 +557,21 @@ mysql> SELECT C.NOME, C.SEXO, E.BAIRRO, E.CIDADE, T.TIPO, T.NUMERO
 3 rows in set (0.00 sec)
  ```
 
+[Voltar ao Índice](#indice)
+
+
+## <a name=parte15>FUNÇÃO IFNULL</a>
+
+```sql 
+SELECT  C.NOME,
+        IFNULL(C.EMAIL,'EMAIL NÃO CADASTRADO') AS 'E-MAIL',
+        E.ESTADO,
+        T.NUMERO
+FROM CLIENTE C
+INNER JOIN ENDERENCO E
+ONC.IDCLIENTE = E.ID_CLIENTE
+INNER JOIN TELEFONE T
+ON C.IDCLIENTE = T.ID_CLIENTE;
+```
+
+[Voltar ao Índice](#indice)
