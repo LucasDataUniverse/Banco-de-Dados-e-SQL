@@ -19,6 +19,7 @@
 - [13 MODELAGEM PRIMEIRA FORMA NORMAL](#parte13)
 - [14 ENTENDENDO SELEÇÃO, PROJEÇÃO E JUNÇÃO](#parte14)
 - [15 FUNÇÃO IFNULL](#parte15)
+- [16 CRIANDO UMA VIEW](#parte16)
 
 ## <a name=parte1> Objetivos do curso</a>
 - Entender a diferença entre um Administrador de Dados e um DBA;
@@ -569,9 +570,20 @@ SELECT  C.NOME,
         T.NUMERO
 FROM CLIENTE C
 INNER JOIN ENDERENCO E
-ONC.IDCLIENTE = E.ID_CLIENTE
+ON C.IDCLIENTE = E.ID_CLIENTE
 INNER JOIN TELEFONE T
 ON C.IDCLIENTE = T.ID_CLIENTE;
 ```
 
 [Voltar ao Índice](#indice)
+
+
+## <a name=parte16>CRIANDO UMA VIEW</a>
+
+```SQL
+CREATE VIEW RELATORIO AS
+SELECT C.NOME, C.EMAIL, E.CIDADE, E.ESTADO
+FROM cliente C
+INNER JOIN endereco E
+ON C.IDCLIENTE = E.ID_CLIENTE;
+```
