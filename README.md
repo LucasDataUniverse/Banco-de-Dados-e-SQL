@@ -20,6 +20,8 @@
 - [14 ENTENDENDO SELEÇÃO, PROJEÇÃO E JUNÇÃO](#parte14)
 - [15 FUNÇÃO IFNULL](#parte15)
 - [16 CRIANDO UMA VIEW](#parte16)
+- [17 PROCEDURE](#parte17)
+
 
 ## <a name=parte1> Objetivos do curso</a>
 - Entender a diferença entre um Administrador de Dados e um DBA;
@@ -586,4 +588,27 @@ SELECT C.NOME, C.EMAIL, E.CIDADE, E.ESTADO
 FROM cliente C
 INNER JOIN endereco E
 ON C.IDCLIENTE = E.ID_CLIENTE;
+```
+
+
+## <a name=parte17>PROCEDURE</a>
+
+- Antes de criar a procedure é necessário alterar o delimitador.
+- alterando o delimitar por exemplo para $ quando criamos a procedure será ignorado o delimitador padrão ";" que estará dentro do código.
+
+```SQL
+DELIMITER $ /* Alterando o delimitador para "$" */
+
+CREATE PROCEDURE NOME()
+BEGIN /* INÍCIO DO CÓDIGO */
+    CODIGO;
+END /* FIM DO CÓDIGO */
+$ /* DELIMITADOR */
+
+/* Chamando a procedure */
+
+DELIMITER ; /* Alterando o delimitador para ";" */
+
+CALL NOME();
+
 ```
